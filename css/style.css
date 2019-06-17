@@ -1,0 +1,76 @@
+
+:root{
+    --chosen-color: #ff00;
+}
+
+body::-webkit-scrollbar { width: 0 !important }
+
+canvas{
+    padding: 1rem;
+    border-width: 3px;
+    border-style: solid;
+    border-image: 
+      linear-gradient(
+        to bottom, 
+        #0D9789, 
+        var(--chosen-color)
+    ) 1 100%;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+h2, h4{
+    color: #ffffff !important;
+}
+
+.site-footer{
+    width: 100%;
+    height: 700px;
+    padding: 20px;
+    background-color: darkslategrey
+}
+
+.primary-sidebar{
+    width:480px; 
+    height:320px; 
+    margin: 20px auto;
+}
+
+#site-header{
+    padding: 10px;
+    margin: 10px;
+}
+
+#main{
+    padding: 10px;
+    margin: 10px;
+}
+
+#color-form{
+    color: #ffffff;
+    padding: 1rem;
+    border-width: 3px;
+    border-style: solid;
+    border-image: 
+    linear-gradient(
+        to right, 
+        #0D9789, 
+        var(--chosen-color)
+        ) 100% 1;
+    }
+    
+#game-link{
+    color: grey;
+}
+    
+#game-link:hover{
+    color:#0D9789
+}
+    
+#game-area{
+    background-color: #ff00;
+}
