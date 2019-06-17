@@ -43,7 +43,7 @@ var chosenColor;
 // Loads everything needed for the game
 function preload() {
 
-    //handleRemoteImages(); -- Chamar images to Git
+    handleRemoteImages(); //Chamar images to Git
     
     Phaser.ScaleManager.NO_SCALE;
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -53,13 +53,14 @@ function preload() {
     game.stage.backgroundColor = '#eee';
     
     // em vez de usar a media diretamente do wordpress e usar o github retirar tudo menos o nome do png 
-    game.load.image('background', 'http://localhost/plugintest/wp-content/uploads/2019/06/background.jpg');
+    // para chamar diretamente do WP fazer upload e buscar o link da media -- exemplo http://localhost/plugintest/wp-content/uploads/2019/06/background.jpg
+    game.load.image('background', 'background.jpg');
 
-    game.load.image('paddle', 'http://localhost/plugintest/wp-content/uploads/2019/05/paddle.png');
-    game.load.image('brick', 'http://localhost/plugintest/wp-content/uploads/2019/05/brick.png');
+    game.load.image('paddle', 'paddle.png');
+    game.load.image('brick', 'brick.png');
     
-    game.load.spritesheet('ball', 'http://localhost/plugintest/wp-content/uploads/2019/05/wobble.png', 20, 20);
-    game.load.spritesheet('button', 'http://localhost/plugintest/wp-content/uploads/2019/05/button.png', 120, 40);
+    game.load.spritesheet('ball', 'wobble.png', 20, 20);
+    game.load.spritesheet('button', 'button.png', 120, 40);
 }
 
 // creates the backgounds and images 
