@@ -54,7 +54,7 @@ function preload() {
     
     // em vez de usar a media diretamente do wordpress e usar o github retirar tudo menos o nome do png 
     // para chamar diretamente do WP fazer upload e buscar o link da media -- exemplo http://localhost/plugintest/wp-content/uploads/2019/06/background.jpg
-    game.load.image('background', 'background.jpg');
+    game.load.image('background', 'blueBackground.jpg');
 
     game.load.image('paddle', 'paddle.png');
     game.load.image('brick', 'brick.png');
