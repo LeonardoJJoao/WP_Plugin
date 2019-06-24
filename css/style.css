@@ -34,7 +34,7 @@ h2, h4{
     background-color: darkslategrey
 }
 
-.primary-sidebar{
+#game-container{
     width:480px; 
     height:320px; 
     margin: 20px auto;
@@ -61,8 +61,27 @@ h2, h4{
         #0D9789, 
         var(--chosen-color)
         ) 100% 1;
-    }
+}
     
+#footer-widgets {
+    background-color: #222;
+    padding: 30px 0;
+    margin: 0;
+    height: 690px;
+}
+
+#colorchoice{
+    width: 380px;
+    margin: 5px 0;
+    background-color: #ffffff;
+}
+
+#livescount{
+    max-width: 380px !important;
+    margin: 5px 0;
+    background-color: #ffffff;
+}
+
 #game-link{
     color: grey;
 }

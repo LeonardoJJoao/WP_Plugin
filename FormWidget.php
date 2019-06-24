@@ -39,92 +39,139 @@ class FormWidget extends WP_Widget
     {
         echo $args['before_widget'];
 
-        if (is_404()){
+        if (is_404()) {
             if (!empty(apply_filters('widget_title', $instance['title']))) {
                 echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
             }
         }
         ?>
-        <script type="text/javascript">
-            //** Gets values from local storage if they exist */
-            window.onload = function() {
-                //get the saved value function - return the value of "v" from localStorage. 
-                function getSavedValue(v) {
-                    if (!localStorage.getItem(v)) {
-                        return ""; // defualt value. 
-                    }
-                    return localStorage.getItem(v);
+    <script type="text/javascript">
+        //** Gets values from local storage if they exist */
+        window.onload = function() {
+            //get the saved value function - return the value of "v" from localStorage. 
+            function getSavedValue(v) {
+                if (!localStorage.getItem(v)) {
+                    return ""; // defualt value. 
                 }
-
-                document.getElementById("colorchoice").value = getSavedValue('color');
-                document.getElementById("livescount").value = getSavedValue('lives');
+                return localStorage.getItem(v);
             }
 
-            function reload() {
-                var color = document.getElementById("colorchoice").value;
-                var livesNumber = document.getElementById("livescount").value;
-                localStorage.setItem('color', color); // Every time user is writing something, the localStorage's value will override . 
-                localStorage.setItem('lives', livesNumber);
-                location.reload();
-            }
-        </script>
+            document.getElementById("colorchoice").value = getSavedValue('color');
+            document.getElementById("livescount").value = getSavedValue('lives');
+        }
 
-        <?php
-        if (is_404()){
+        function reload() {
+            var color = document.getElementById("colorchoice").value;
+            var livesNumber = document.getElementById("livescount").value;
+            localStorage.setItem('color', color); // Every time user is writing something, the localStorage's value will override . 
+            localStorage.setItem('lives', livesNumber);
+            location.reload();
+        }
+    </script>
+
+    <?php
+
+    function game_container_func()
+    {
+        echo '<div id="game-container">
+    <h4>Customize</h4>
+    <form action="#" id="color-form" style="margin:20px">
+    <ul>
+    <li>
+    <label for="colorchoice">Color Choices</label>
+    <select name="colorchoice" id="colorchoice">
+    <option value="yellow">Yellow</option>
+    <option value="red">Red</option>
+    <option value="blue">Blue</option>
+    <option value="green">Green</option>
+    </select>
+    </li>
+    <li>
+    <label for="livescount">Number of lives</label>
+    <input type="number" name="livescount" id="livescount" value="" min="1" />
+    </li>
+    <li>
+    <a id="game-link" href="#" onclick="reload()"> Customize the game </a>
+    </li>
+    </ul>
+    </form>
+    <div id="game-area" class="game-area" style="width:480px; height:320px; margin: 20px auto;">
+    </div>
+    </div>';
+    }
+    add_shortcode('Game', 'game_container_func');
+
+    function lorem_func(){
+        return "random text bla bla bla bla";
+    }
+    add_shortcode('Lorem', 'lorem_container_func');
+
+    if (is_404()) {
+
+        add_filter('generate_404_text', 'generate_custom_404_text');
+        function generate_custom_404_text()
+        {
+            return do_shortcode('[Game]');
+        }
+
         ?>
-        
-        <script>
+
+        <!-- <script>
             var gameContainer = '<div id="game-container">' +
-                    '<h4>Customize</h4>' +
-                        '<form action="#" id="color-form" style="margin:20px">' +
-                            '<ul>' +
-                                '<li>' +
-                                    '<label for="colorchoice">Color Choices</label>' +
-                                    '<select name="colorchoice" id="colorchoice">' +
-                                        '<option value="yellow">Yellow</option>' +
-                                        '<option value="red">Red</option>' +
-                                        '<option value="blue">Blue</option>' +
-                                        '<option value="green">Green</option>' +
-                                    '</select>' +
-                                '</li>' +
-                                '<li>' +
-                                    '<label for="livescount">Number of lives</label>' +
-                                    '<input type="number" name="livescount" id="livescount" value="" min="1" />' +
-                                '</li>' +
-                                '<li>' +
-                                    '<a id="game-link" href="#" onclick="reload()"> Customize the game </a>' +
-                                '</li>' +
-                            '</ul>' +
-                        '</form>' +
-                    '<div id="game-area" class="game-area" style="width:480px; height:320px; margin: 20px auto;">' +
-                    '</div>' +
+                '<h4>Customize</h4>' +
+                '<form action="#" id="color-form" style="margin:20px">' +
+                '<ul>' +
+                '<li>' +
+                '<label for="colorchoice">Color Choices</label>' +
+                '<select name="colorchoice" id="colorchoice">' +
+                '<option value="yellow">Yellow</option>' +
+                '<option value="red">Red</option>' +
+                '<option value="blue">Blue</option>' +
+                '<option value="green">Green</option>' +
+                '</select>' +
+                '</li>' +
+                '<li>' +
+                '<label for="livescount">Number of lives</label>' +
+                '<input type="number" name="livescount" id="livescount" value="" min="1" />' +
+                '</li>' +
+                '<li>' +
+                '<a id="game-link" href="#" onclick="reload()"> Customize the game </a>' +
+                '</li>' +
+                '</ul>' +
+                '</form>' +
+                '<div id="game-area" class="game-area" style="width:480px; height:320px; margin: 20px auto;">' +
+                '</div>' +
                 '</div>';
 
             var divElement = document.createElement('div');
 
             divElement.innerHTML = gameContainer;
 
-            var footer = document.getElementById('primary-sidebar');
-            
+            var footer = document.getElementById(<?php echo '"' . $instance['gameField'] . '"'?>);
+            console.log(footer)
+            //var footer = document.getElementById('footer-widgets');
+
             footer.appendChild(divElement);
 
             console.log(document.getElementById('game-area'));
             console.log('2')
-        </script>
-        <?php
-        }
-        echo $args['after_widget'];
+        </script> -->
+    <?php
+    }
+    echo $args['after_widget'];
     }
 
     // Widget Back End
     public function form($instance)
     {
         $title = !empty($instance['title']) ? $instance['title'] : esc_html__('New Title');
+        $gameField = !empty($instance['gameField']) ? $instance['gameField'] : esc_html__('');
         $formColor = !empty($instance['formColor']) ? $instance['formColor'] : esc_html__('');
         $formColorCode = !empty($instance['formColorCode']) ? $instance['formColorCode'] : esc_html__('');
 
 
         $titleID = esc_attr($this->get_field_id('title'));
+        $gameFieldID = esc_attr($this->get_field_id('gameField'));
         $formColorID = esc_attr($this->get_field_id('formColor'));
         $formColorCodeID = esc_attr($this->get_field_id('formColorCode'));
 
@@ -134,62 +181,57 @@ class FormWidget extends WP_Widget
             <label for="<?php echo $titleID; ?>">Title:</label>
             <input type="text" class="widefat" id="<?php echo $titleID; ?>" name="<?php echo esc_attr($this->get_field_name('title')); ?>" value="<?php echo esc_attr($title) ?>" />
         </p>
+        <!-- GAME FIELD ID -->
+        <p>
+            <label for="<?php echo $gameFieldID; ?>">Where should the game appear?(Insert ID pf the field)</label>
+            <input type="text" class="widefat" id="<?php echo $gameFieldID; ?>" name="<?php echo esc_attr($this->get_field_name('gameField')); ?>" value="<?php echo esc_attr($gameField) ?>" />
+        </p>
         <!-- COLOR FORM -->
-        <!-- <p>
-                    COLOR NAME 
-                    <div style="padding-bottom: 10px;"> 
-                        <label for="<?php echo $formColorID; ?>">Color:</label>
-                        <input 
-                        type="text" 
-                        class="widefat" 
-                        id="<?php echo $formColorID; ?>" 
-                        name="<?php echo esc_attr($this->get_field_name('formColor')); ?>" 
-                        value="<?php echo esc_attr($formColor) ?>" />
-                    </div>
-                </p>
-                <p>
-                    COLOR CODE 
-                    <div style="padding-bottom: 10px;"> 
-                        <label for="<?php echo $formColorCodeID; ?>">Color Code:</label>
-                        <input 
-                        type="text" 
-                        class="widefat" 
-                        id="<?php echo $formColorCodeID; ?>" 
-                        name="<?php echo esc_attr($this->get_field_name('formColorCode')); ?>" 
-                        value="<?php echo esc_attr($formColorCode) ?>" />
-                    </div>
-                    <a href="#" onClick="onClick()" style="color:black; padding: 10px; display:block;">Add Color</a>
-                </p>
-                    COLOR TABLE 
-                <p>
-                    <table class="widefat" id="color-options" style="Border: 1px solid black">
-                        <tr>
-                            <th style="font-weight:bold;">Color Name</th>
-                            <th style="font-weight:bold;">Color Code</th>
-                            <th style="font-weight:bold;">Color</th>
-                        </tr>
-                        <tr>
-                            <td>Blue</td>
-                            <td>0095DD</td>
-                            <td style="background-color: #0095DD"></td>
-                        </tr>
-                        <tr>
-                            <td>Red</td>
-                            <td>FF0000</td>
-                            <td style="background-color: #FF0000"></td>
-                        </tr>
-                        <tr>
-                            <td>Yellow</td>
-                            <td>FFFF00</td>
-                            <td style="background-color: #FFFF00"></td>
-                        </tr>
-                        <tr>
-                            <td>Green</td>
-                            <td>01DF01</td>
-                            <td style="background-color: #01DF01"></td>
-                        </tr>
-                    </table>
-                </p> -->
+        <p>
+            <!-- COLOR NAME  -->
+            <div style="padding-bottom: 10px;">
+                <label for="<?php echo $formColorID; ?>">Color:</label>
+                <input type="text" class="widefat" id="<?php echo $formColorID; ?>" name="<?php echo esc_attr($this->get_field_name('formColor')); ?>" value="<?php echo esc_attr($formColor) ?>" />
+            </div>
+        </p>
+        <p>
+            <!-- COLOR CODE  -->
+            <div style="padding-bottom: 10px;">
+                <label for="<?php echo $formColorCodeID; ?>">Color Code:</label>
+                <input type="text" class="widefat" id="<?php echo $formColorCodeID; ?>" name="<?php echo esc_attr($this->get_field_name('formColorCode')); ?>" value="<?php echo esc_attr($formColorCode) ?>" />
+            </div>
+            <a href="#" onClick="onClick()" style="color:black; padding: 10px; display:block;">Add Color</a>
+        </p>
+        <!-- COLOR TABLE  -->
+        <p>
+            <table class="widefat" id="color-options" style="Border: 1px solid black">
+                <tr>
+                    <th style="font-weight:bold;">Color Name</th>
+                    <th style="font-weight:bold;">Color Code</th>
+                    <th style="font-weight:bold;">Color</th>
+                </tr>
+                <tr>
+                    <td>Blue</td>
+                    <td>0095DD</td>
+                    <td style="background-color: #0095DD"></td>
+                </tr>
+                <tr>
+                    <td>Red</td>
+                    <td>FF0000</td>
+                    <td style="background-color: #FF0000"></td>
+                </tr>
+                <tr>
+                    <td>Yellow</td>
+                    <td>FFFF00</td>
+                    <td style="background-color: #FFFF00"></td>
+                </tr>
+                <tr>
+                    <td>Green</td>
+                    <td>01DF01</td>
+                    <td style="background-color: #01DF01"></td>
+                </tr>
+            </table>
+        </p> -->
         <script>
             var newColor;
             var newColorCode;
@@ -250,9 +292,10 @@ class FormWidget extends WP_Widget
         $instance = array();
 
         $instance['title'] = sanitize_text_field($new_instance['title']);
-        // $instance['formColor'] = sanitize_text_field( $new_instance['formColor']);
-        // $instance['formColorCode'] = sanitize_text_field( $new_instance['formColorCode']);
+        $instance['gameField'] = sanitize_text_field($new_instance['gameField']);
+        $instance['formColor'] = sanitize_text_field($new_instance['formColor']);
+        $instance['formColorCode'] = sanitize_text_field($new_instance['formColorCode']);
 
         return $instance;
     }
-    }
+}
